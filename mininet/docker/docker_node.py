@@ -116,7 +116,8 @@ class DockerNode( Node ):
                                  stderr=subprocess.STDOUT, close_fds=False )
         pidp.wait()
         ps_out = pidp.stdout.readlines()
-        self.pid = int(ps_out[0])
+        # need to remove single quote character and new line character \n from the output 
+        self.pid = int(ps_out[0].strip().replace("'",''))
         self.cmd( 'export PS1=\"\\177\"; printf "\\177"' )
         self.cmd( 'stty -echo; set +m' )
 
